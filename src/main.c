@@ -59,19 +59,37 @@ int main(int argc, char *argv[]) {
     struct BITMAPINFOHEADER info_header;
     size_t file_header_size = sizeof(file_header);
     size_t info_header_size = sizeof(info_header);
-    size_t file_header_success;
-    size_t info_header_success;
     size_t pixels_offset;
     
     if (picture == NULL) {
-        fprintf(stderr, "File parsing error\n");
+        fprintf(stderr, "Picture reading error\n");
         exit(-1);
     }
 
-    file_header_success = fread(&file_header, file_header_size, 1, picture);
+    if (fread(&file_header, file_header_size, 1, picture) != 1) {
+        fprintf(stderr, "File header reading error\n");
+        exit(-1);
+    }
+
     pixels_offset = file_header.offbits - file_header_size;
     info_header_size = pixels_offset > info_header_size ? info_header_size : pixels_offset;
-    info_header_success = fread(&info_header, info_header_size, 1, picture);
+    
+    if (fread(&info_header, info_header_size, 1, picture) != 1) {
+        fprintf(stderr, "Info header reading error\n");
+        exit(-1);
+    }
+ 
+    printf("Size: %u\n", file_header.size);
+    printf("BMP Info header size: %u\n", info_header.size);
+    printf("Width: %d\n", info_header.width);
+    printf("Height: %d\n", info_header.height);
+    printf("Planes: %u\n", info_header.planes);
+    printf("Bits/pixel: %u\n", info_header.bit_count);
+    printf("Compression: %u\n", info_header.compression);
+    printf("Image size: %u\n", info_header.size_image);
+    printf("Pixels/meter: %dx%d\n", info_header.x_pels_per_meter, info_header.y_pels_per_meter);
+    printf("Colors number: %u\n", info_header.clr_used);
+    printf("Important colors: %u\n", info_header.clr_important);
 
     fclose(picture);
     return 0;
