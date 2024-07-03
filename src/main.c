@@ -91,6 +91,15 @@ int main(int argc, char *argv[]) {
     printf("Colors number: %u\n", info_header.clr_used);
     printf("Important colors: %u\n", info_header.clr_important);
 
-    fclose(picture);
-    return 0;
+    if (info_header.size == 40) {
+        fclose(picture);
+        return 0;
+    }
+
+    printf("Red mask: %x\n", info_header.red_mask);
+    printf("Green mask: %x\n", info_header.green_mask);
+    printf("Blue mask: %x\n", info_header.blue_mask);
+    printf("Alpha mask: %x\n", info_header.alpha_mask);
+    printf("Color space type: %x\n", info_header.cs_type);
+    
 }
