@@ -1,18 +1,11 @@
+#pragma once
 #include <inttypes.h>
 #include <stdlib.h>
 
-#define BMP_TYPE 19778 // = BM
+#define BMP_TYPE 0x4D42 // = BM
 #define BMP3_INFO_HEADER_SIZE 40
 #define BMP4_INFO_HEADER_SIZE 108
 #define BMP5_INFO_HEADER_SIZE 124
-
-#define die(message)                                                           \
-  fprintf(stderr, message);                                                    \
-  exit(-1);
-
-#define close()                                                                \
-  fclose(picture);                                                             \
-  return 0;
 
 #pragma pack(push, 1)
 
