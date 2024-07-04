@@ -57,3 +57,21 @@ struct BITMAPINFOHEADER {
 };
 
 #pragma pack(pop)
+
+FILE *open_file(int argc, char *argv[]);
+
+struct BITMAPFILEHEADER read_file_header(FILE *picture);
+
+struct BITMAPINFOHEADER read_info_header(FILE *picture, size_t pixels_offset);
+
+void print_header_version_3(struct BITMAPFILEHEADER file_header,
+                            struct BITMAPINFOHEADER info_header);
+
+void print_header_version_4(struct BITMAPFILEHEADER file_header,
+                            struct BITMAPINFOHEADER info_header);
+
+void print_header_version_5(struct BITMAPFILEHEADER file_header,
+                            struct BITMAPINFOHEADER info_header);
+
+void print_header(struct BITMAPFILEHEADER file_header,
+                  struct BITMAPINFOHEADER info_header);
