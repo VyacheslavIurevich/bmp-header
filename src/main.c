@@ -108,7 +108,6 @@ void print_header_version_4(struct BITMAPFILEHEADER file_header,
 
 void print_header_version_5(struct BITMAPFILEHEADER file_header,
                             struct BITMAPINFOHEADER info_header) {
-  print_header_version_3(file_header, info_header);
   print_header_version_4(file_header, info_header);
   printf("Intent: %u\n", info_header.intent);
   printf("Profile data: %u\n", info_header.profile_data);
@@ -142,7 +141,10 @@ int main(int argc, char *argv[]) {
   struct BITMAPINFOHEADER info_header =
       read_info_header(picture, pixels_offset);
 
-  fclose(picture);
+  if (fclose(picture) != 0) {
+    fprintf(stderr, "File closing error\n");
+    exit(-1);
+  }
 
   print_header(file_header, info_header);
 
