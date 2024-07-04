@@ -76,8 +76,8 @@ void print_header_version_3(struct BITMAPFILEHEADER file_header,
   printf("BMP Info header size: %u\n", info_header.size);
   printf("Width: %d\n", info_header.width);
   printf("Height: %d\n", info_header.height);
-  printf("Planes: %u\n", info_header.planes);
-  printf("Bits/pixel: %u\n", info_header.bit_count);
+  printf("Planes: %hu\n", info_header.planes);
+  printf("Bits/pixel: %hu\n", info_header.bit_count);
   printf("Compression: %u\n", info_header.compression);
   printf("Image size: %u\n", info_header.size_image);
   printf("Pixels/meter: %dx%d\n", info_header.x_pels_per_meter,
