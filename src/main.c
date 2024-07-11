@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-FILE *open_file(int argc, char *argv[]) {
+static FILE *open_file(int argc, char *argv[]) {
   if (argc != 2) {
     fprintf(stderr, "There must be one command line argument\n");
     exit(-1);
@@ -18,7 +18,7 @@ FILE *open_file(int argc, char *argv[]) {
   return file;
 }
 
-struct BITMAPFILEHEADER read_file_header(FILE *picture) {
+static struct BITMAPFILEHEADER read_file_header(FILE *picture) {
   struct BITMAPFILEHEADER file_header;
 
   if (fread(&file_header, sizeof(file_header), 1, picture) != 1) {
@@ -44,7 +44,8 @@ struct BITMAPFILEHEADER read_file_header(FILE *picture) {
   return file_header;
 }
 
-struct BITMAPINFOHEADER read_info_header(FILE *picture, size_t pixels_offset) {
+static struct BITMAPINFOHEADER read_info_header(FILE *picture,
+                                                size_t pixels_offset) {
   struct BITMAPINFOHEADER info_header;
   size_t info_header_struct_size = sizeof(info_header);
   size_t info_header_size = pixels_offset > info_header_struct_size
@@ -70,8 +71,8 @@ struct BITMAPINFOHEADER read_info_header(FILE *picture, size_t pixels_offset) {
   return info_header;
 }
 
-void print_header_version_3(struct BITMAPFILEHEADER file_header,
-                            struct BITMAPINFOHEADER info_header) {
+static void print_header_version_3(struct BITMAPFILEHEADER file_header,
+                                   struct BITMAPINFOHEADER info_header) {
   printf("Size: %u\n", file_header.size);
   printf("BMP Info header size: %u\n", info_header.size);
   printf("Width: %d\n", info_header.width);
@@ -86,8 +87,8 @@ void print_header_version_3(struct BITMAPFILEHEADER file_header,
   printf("Important colors: %u\n", info_header.clr_important);
 }
 
-void print_header_version_4(struct BITMAPFILEHEADER file_header,
-                            struct BITMAPINFOHEADER info_header) {
+static void print_header_version_4(struct BITMAPFILEHEADER file_header,
+                                   struct BITMAPINFOHEADER info_header) {
   print_header_version_3(file_header, info_header);
   printf("Red mask: %x\n", info_header.red_mask);
   printf("Green mask: %x\n", info_header.green_mask);
@@ -106,16 +107,16 @@ void print_header_version_4(struct BITMAPFILEHEADER file_header,
   }
 }
 
-void print_header_version_5(struct BITMAPFILEHEADER file_header,
-                            struct BITMAPINFOHEADER info_header) {
+static void print_header_version_5(struct BITMAPFILEHEADER file_header,
+                                   struct BITMAPINFOHEADER info_header) {
   print_header_version_4(file_header, info_header);
   printf("Intent: %u\n", info_header.intent);
   printf("Profile data: %u\n", info_header.profile_data);
   printf("Profile size: %u\n", info_header.profile_size);
 }
 
-void print_header(struct BITMAPFILEHEADER file_header,
-                  struct BITMAPINFOHEADER info_header) {
+static void print_header(struct BITMAPFILEHEADER file_header,
+                         struct BITMAPINFOHEADER info_header) {
   switch (info_header.size) {
   case BMP3_INFO_HEADER_SIZE:
     print_header_version_3(file_header, info_header);
