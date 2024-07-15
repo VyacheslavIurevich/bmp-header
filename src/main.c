@@ -71,53 +71,53 @@ static struct BITMAPINFOHEADER read_info_header(FILE *picture,
   return info_header;
 }
 
-static void print_header_version_3(struct BITMAPFILEHEADER file_header,
-                                   struct BITMAPINFOHEADER info_header) {
-  printf("Size: %u\n", file_header.size);
-  printf("BMP Info header size: %u\n", info_header.size);
-  printf("Width: %d\n", info_header.width);
-  printf("Height: %d\n", info_header.height);
-  printf("Planes: %hu\n", info_header.planes);
-  printf("Bits/pixel: %hu\n", info_header.bit_count);
-  printf("Compression: %u\n", info_header.compression);
-  printf("Image size: %u\n", info_header.size_image);
-  printf("Pixels/meter: %dx%d\n", info_header.x_pels_per_meter,
-         info_header.y_pels_per_meter);
-  printf("Colors number: %u\n", info_header.clr_used);
-  printf("Important colors: %u\n", info_header.clr_important);
+static void print_header_version_3(struct BITMAPFILEHEADER *file_header,
+                                   struct BITMAPINFOHEADER *info_header) {
+  printf("Size: %u\n", file_header->size);
+  printf("BMP Info header size: %u\n", info_header->size);
+  printf("Width: %d\n", info_header->width);
+  printf("Height: %d\n", info_header->height);
+  printf("Planes: %hu\n", info_header->planes);
+  printf("Bits/pixel: %hu\n", info_header->bit_count);
+  printf("Compression: %u\n", info_header->compression);
+  printf("Image size: %u\n", info_header->size_image);
+  printf("Pixels/meter: %dx%d\n", info_header->x_pels_per_meter,
+         info_header->y_pels_per_meter);
+  printf("Colors number: %u\n", info_header->clr_used);
+  printf("Important colors: %u\n", info_header->clr_important);
 }
 
-static void print_header_version_4(struct BITMAPFILEHEADER file_header,
-                                   struct BITMAPINFOHEADER info_header) {
+static void print_header_version_4(struct BITMAPFILEHEADER *file_header,
+                                   struct BITMAPINFOHEADER *info_header) {
   print_header_version_3(file_header, info_header);
-  printf("Red mask: %x\n", info_header.red_mask);
-  printf("Green mask: %x\n", info_header.green_mask);
-  printf("Blue mask: %x\n", info_header.blue_mask);
-  printf("Alpha mask: %x\n", info_header.alpha_mask);
-  printf("Color space type: %x\n", info_header.cs_type);
-  if (info_header.cs_type == 0) {
-    printf("CIEXYZ Red: %x %x %x\n", info_header.end_points.red.x,
-           info_header.end_points.red.y, info_header.end_points.red.z);
-    printf("CIEXYZ Green: %x %x %x\n", info_header.end_points.green.x,
-           info_header.end_points.green.y, info_header.end_points.green.z);
-    printf("CIEXYZ Blue: %x %x %x\n", info_header.end_points.blue.x,
-           info_header.end_points.blue.y, info_header.end_points.blue.z);
-    printf("Gamma: %x %x %x\n", info_header.gamma_red, info_header.gamma_green,
-           info_header.gamma_blue);
+  printf("Red mask: %x\n", info_header->red_mask);
+  printf("Green mask: %x\n", info_header->green_mask);
+  printf("Blue mask: %x\n", info_header->blue_mask);
+  printf("Alpha mask: %x\n", info_header->alpha_mask);
+  printf("Color space type: %x\n", info_header->cs_type);
+  if (info_header->cs_type == 0) {
+    printf("CIEXYZ Red: %x %x %x\n", info_header->end_points.red.x,
+           info_header->end_points.red.y, info_header->end_points.red.z);
+    printf("CIEXYZ Green: %x %x %x\n", info_header->end_points.green.x,
+           info_header->end_points.green.y, info_header->end_points.green.z);
+    printf("CIEXYZ Blue: %x %x %x\n", info_header->end_points.blue.x,
+           info_header->end_points.blue.y, info_header->end_points.blue.z);
+    printf("Gamma: %x %x %x\n", info_header->gamma_red, info_header->gamma_green,
+           info_header->gamma_blue);
   }
 }
 
-static void print_header_version_5(struct BITMAPFILEHEADER file_header,
-                                   struct BITMAPINFOHEADER info_header) {
+static void print_header_version_5(struct BITMAPFILEHEADER *file_header,
+                                   struct BITMAPINFOHEADER *info_header) {
   print_header_version_4(file_header, info_header);
-  printf("Intent: %u\n", info_header.intent);
-  printf("Profile data: %u\n", info_header.profile_data);
-  printf("Profile size: %u\n", info_header.profile_size);
+  printf("Intent: %u\n", info_header->intent);
+  printf("Profile data: %u\n", info_header->profile_data);
+  printf("Profile size: %u\n", info_header->profile_size);
 }
 
-static void print_header(struct BITMAPFILEHEADER file_header,
-                         struct BITMAPINFOHEADER info_header) {
-  switch (info_header.size) {
+static void print_header(struct BITMAPFILEHEADER *file_header,
+                         struct BITMAPINFOHEADER *info_header) {
+  switch (info_header->size) {
   case BMP3_INFO_HEADER_SIZE:
     print_header_version_3(file_header, info_header);
     break;
@@ -147,7 +147,7 @@ int main(int argc, char *argv[]) {
     exit(-1);
   }
 
-  print_header(file_header, info_header);
+  print_header(&file_header, &info_header);
 
   return 0;
 }

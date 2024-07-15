@@ -66,14 +66,14 @@ static struct BITMAPFILEHEADER read_file_header(FILE *picture);
 static struct BITMAPINFOHEADER read_info_header(FILE *picture,
                                                 size_t pixels_offset);
 
-static void print_header_version_3(struct BITMAPFILEHEADER file_header,
-                                   struct BITMAPINFOHEADER info_header);
+static void print_header_version_3(struct BITMAPFILEHEADER *file_header,
+                                   struct BITMAPINFOHEADER *info_header);
 
-static void print_header_version_4(struct BITMAPFILEHEADER file_header,
-                                   struct BITMAPINFOHEADER info_header);
+static void print_header_version_4(struct BITMAPFILEHEADER *file_header,
+                                   struct BITMAPINFOHEADER *info_header);
 
-static void print_header_version_5(struct BITMAPFILEHEADER file_header,
-                                   struct BITMAPINFOHEADER info_header);
+static void print_header_version_5(struct BITMAPFILEHEADER *file_header,
+                                   struct BITMAPINFOHEADER *info_header);
 
-static void print_header(struct BITMAPFILEHEADER file_header,
-                         struct BITMAPINFOHEADER info_header);
+static void print_header(struct BITMAPFILEHEADER *file_header,
+                         struct BITMAPINFOHEADER *info_header);
