@@ -102,8 +102,8 @@ static void print_header_version_4(struct BITMAPFILEHEADER *file_header,
            info_header->end_points.green.y, info_header->end_points.green.z);
     printf("CIEXYZ Blue: %x %x %x\n", info_header->end_points.blue.x,
            info_header->end_points.blue.y, info_header->end_points.blue.z);
-    printf("Gamma: %x %x %x\n", info_header->gamma_red, info_header->gamma_green,
-           info_header->gamma_blue);
+    printf("Gamma: %x %x %x\n", info_header->gamma_red,
+           info_header->gamma_green, info_header->gamma_blue);
   }
 }
 
